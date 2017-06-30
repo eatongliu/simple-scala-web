@@ -1,0 +1,488 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.gpdata</groupId>
+  <artifactId>simplescala</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <inceptionYear>2017</inceptionYear>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.jdk.version>1.8</project.jdk.version>
+    <project.spring.version>4.3.7.RELEASE</project.spring.version>
+    <druid-version>1.0.18</druid-version>
+    <project.scala.version>2.11.8</project.scala.version>
+  </properties>
+
+  <!-- scala 项目增加的仓库 -->
+  <repositories>
+    <repository>
+      <id>scalaz</id>
+      <name>scalaz</name>
+      <url>http://dl.bintray.com/scalaz/releases</url>
+    </repository>
+    <repository>
+      <id>mvnrepository</id>
+      <name>Derbysoft Release Repository</name>
+      <url>http://search.maven.org/remotecontent?filepath=</url>
+    </repository>
+    <repository>
+      <id>jahia</id>
+      <name>mvnrepository</name>
+      <url>http://maven.jahia.org/maven2</url>
+    </repository>
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+  </repositories>
+
+  <!--<pluginRepositories>-->
+    <!--<pluginRepository>-->
+      <!--<id>scala-tools.org</id>-->
+      <!--<name>Scala-Tools Maven2 Repository</name>-->
+      <!--<url>http://scala-tools.org/repo-releases</url>-->
+    <!--</pluginRepository>-->
+  <!--</pluginRepositories>-->
+
+  <dependencies>
+
+    <!-- 允许 js 跨域访问 (使用 tomcat) -->
+    <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+    <!---->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>8.0.38</version>
+      <!--<scope>provided</scope>-->
+    </dependency>
+
+    <!-- scala 相关依赖 -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${project.scala.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-compiler</artifactId>
+      <version>${project.scala.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scala-lang.modules</groupId>
+      <artifactId>scala-xml_2.11</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scala-lang.modules</groupId>
+      <artifactId>scala-parser-combinators_2.11</artifactId>
+      <version>1.0.5</version>
+    </dependency>
+
+    <!-- 依赖注入 -->
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+
+    <!-- org.springframework -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.8.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jms</artifactId>
+      <version>${project.spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${project.spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${project.spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${project.spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${project.spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${project.spring.version}</version>
+    </dependency>
+
+    <!-- for test -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${project.spring.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!--dao框架依赖，采用mybatis-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.2.6</version>
+    </dependency>
+
+    <!--mybatis采用自己与spring整合依赖-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.8.4</version>
+    </dependency>
+
+    <!-- JSON 转换工具 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.10</version>
+    </dependency>
+
+    <!--&lt;!&ndash; https://mvnrepository.com/artifact/net.liftweb/lift-json_2.11 &ndash;&gt;-->
+    <!--<dependency>-->
+      <!--<groupId>net.liftweb</groupId>-->
+      <!--<artifactId>lift-json_2.11</artifactId>-->
+      <!--<version>3.0.1</version>-->
+    <!--</dependency>-->
+
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.5</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>jetty-util</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- slf4j nad log4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.21</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.21</version>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.25</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>${druid-version}</version>
+    </dependency>
+
+    <!-- ehcache 缓存 -->
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-core</artifactId>
+      <version>2.6.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Servlet and jsp -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+      <version>1.2.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+
+
+    <!--<dependency>-->
+      <!--<groupId>org.specs</groupId>-->
+      <!--<artifactId>specs</artifactId>-->
+      <!--<version>1.2.5</version>-->
+      <!--<scope>test</scope>-->
+    <!--</dependency>-->
+  </dependencies>
+
+  <build>
+    <finalName>simplescala</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/scala</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
+    <testResources>
+        <testResource>
+            <directory>src/test/scala</directory>
+            <filtering>false</filtering>
+        </testResource>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources</directory>
+          <includes>
+              <include>**/*.properties</include>
+              <include>**/*.xml</include>
+          </includes>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+
+    <plugins>
+      <!-- scala 编译插件 -->
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>compile-scala</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>test-compile-scala</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scalaVersion>${project.scala.version}</scalaVersion>
+        </configuration>
+      </plugin>
+
+      <!-- 测试插件 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit47</artifactId>
+            <version>2.19.1</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <forkMode>once</forkMode>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+
+      <!-- java 编译 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>${project.jdk.version}</source>
+          <target>${project.jdk.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- java 资源 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!--<plugin>-->
+        <!--<groupId>org.scala-tools</groupId>-->
+        <!--<artifactId>maven-scala-plugin</artifactId>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<goals>-->
+              <!--<goal>compile</goal>-->
+              <!--<goal>testCompile</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+        <!--<configuration>-->
+          <!--<scalaVersion>${project.scala.version}</scalaVersion>-->
+          <!--<args>-->
+            <!--<arg>-target:jvm-1.8</arg>-->
+          <!--</args>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <buildcommands>
+            <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>
+          </buildcommands>
+          <additionalProjectnatures>
+            <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>
+          </additionalProjectnatures>
+          <classpathContainers>
+            <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+            <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>
+          </classpathContainers>
+        </configuration>
+      </plugin>
+
+      <!-- war 打包 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <configuration>
+          <scalaVersion>${project.scala.version}</scalaVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <profiles>
+    <profile>
+      <id>development</id>
+      <properties>
+        <!-- 数据库配置 -->
+        <project.jdbc.driverClassName>com.mysql.jdbc.Driver</project.jdbc.driverClassName>
+        <project.jdbc.url>jdbc:mysql://localhost:3306/test?useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;zeroDateTimeBehavior=convertToNull</project.jdbc.url>
+        <project.jdbc.username>root</project.jdbc.username>
+        <project.jdbc.password>root123</project.jdbc.password>
+
+        <project.jdbc.druid.initialSize>20</project.jdbc.druid.initialSize>
+        <project.jdbc.druid.minIdle>200</project.jdbc.druid.minIdle>
+        <project.jdbc.druid.maxActive>200</project.jdbc.druid.maxActive>
+        <project.jdbc.druid.maxWait>60000</project.jdbc.druid.maxWait>
+        <project.jdbc.druid.timeBetweenEvictionRunsMillis>60000
+        </project.jdbc.druid.timeBetweenEvictionRunsMillis>
+        <project.jdbc.druid.minEvictableIdleTimeMillis>300000</project.jdbc.druid.minEvictableIdleTimeMillis>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+
+
+    <profile>
+      <id>release</id>
+      <properties>
+        <!-- 数据库配置 -->
+        <project.jdbc.driverClassName>com.gbase.jdbc.Driver</project.jdbc.driverClassName>
+        <project.jdbc.url>jdbc:gbase://172.20.32.142:5258/test</project.jdbc.url>
+        <project.jdbc.username>root</project.jdbc.username>
+        <project.jdbc.password>root123</project.jdbc.password>
+
+        <project.jdbc.druid.initialSize>20</project.jdbc.druid.initialSize>
+        <project.jdbc.druid.minIdle>200</project.jdbc.druid.minIdle>
+        <project.jdbc.druid.maxActive>200</project.jdbc.druid.maxActive>
+        <project.jdbc.druid.maxWait>60000</project.jdbc.druid.maxWait>
+        <project.jdbc.druid.timeBetweenEvictionRunsMillis>60000
+        </project.jdbc.druid.timeBetweenEvictionRunsMillis>
+        <project.jdbc.druid.minEvictableIdleTimeMillis>300000</project.jdbc.druid.minEvictableIdleTimeMillis>
+      </properties>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+    </profile>
+  </profiles>
+</project>
