@@ -1,6 +1,5 @@
 package com.gpdata.toosimple.user.controller
 
-import com.alibaba.fastjson.JSONObject
 import com.gpdata.toosimple.user.service.UserService
 import com.gpdata.toosimple.utils.BeanResult
 import org.springframework.beans.factory.annotation.Autowired

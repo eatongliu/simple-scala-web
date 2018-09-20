@@ -1,7 +1,6 @@
 package com.gpdata.toosimple.user.entity
 
 import java.util.Date
-import javax.print.attribute.standard.JobOriginatingUserName
 
 import scala.beans.BeanProperty
 
